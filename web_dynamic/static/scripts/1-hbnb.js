@@ -1,24 +1,30 @@
 #!/usr/bin/node
 // Select some Amenities to be comfortable!
 $(function () {
+	let userAmenities = {};
 	$('.amenities .popover input').on('change', function () {
 		// update h4
-		const defaultH4 = '&nbsp;';
+		if ($(this).is(':checked')) {
+			console.log(`Hey ${$(this).data('name')} was just checked`);
+			userAmenities[$(this).data('id')] = $(this).data('name');
+		} else {
+			console.log(`Hey ${$(this).data('name')} was just removed`);
+			delete userAmenities[$(this).data('id')];
+		}
+
 		console.log('New list');
+		const defaultH4 = '&nbsp;';
 		$('.amenities h4').empty();
-		$('.amenities .popover li input:checked').each(function () {
-			console.log($(this).data('name'));
-			// updated tag
-			let prev_list = $('.amenities h4').text();
-			prev_list = prev_list.trim();
-			if (prev_list.length === 0) {
-				$('.amenities h4').text($(this).data('name'));
+
+		for (const [key, name] of Object.entries(userAmenities)) {
+			console.log(name);
+			let prevList = $('.amenities h4').text().trim();
+			if (prevList.length === 0) {
+				$('.amenities h4').text(name);
+			} else {
+				$('.amenities h4').text($('.amenities h4').text() + ', ' + name);
 			}
-			else {
-				let val = $('.amenities h4').text() + ', ' + $(this).data('name');
-				$('.amenities h4').text(val);
-			}
-		})
+		}
 		console.log('End of list');
 
 		if ($('.amenities h4').text().trim().length == 0)
