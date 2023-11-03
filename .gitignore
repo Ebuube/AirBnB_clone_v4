@@ -1,0 +1,20 @@
+# Python cache directory
+__pycache__/
+
+# Temporary files
+*~
+*.swp
+
+# JSON storage
+*.json
+
+# Virtual environment
+venv/
+
+# Folder for compiled scripts
+versions/
+
+# Versions of web_static that I don't want to be uploaded
+web_static_smart/
+
+test_get_count.py
