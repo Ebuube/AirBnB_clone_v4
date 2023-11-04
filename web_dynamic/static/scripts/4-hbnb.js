@@ -4,6 +4,33 @@ $(function () {
   // versatile values
   let userAmenities = {};
 
+  function displayPlaces(places) {
+      console.log('Got places');
+      for (const place of places) {
+        const article = $('<article></article>');
+
+        // Title
+        const title = $('<div class="title_box"></div>');
+        title.append(`<h2>${place.name}</h2>`);
+        title.append(`<div class="price_by_night">${place.price_by_night}</div>`);
+        article.append(title);
+
+        // information
+        const info = $('<div class="information"></div>');
+        info.append(`<div class="max_guest">${place.max_guest} Guest(s)</div>`);
+        info.append(`<div class="number_rooms">${place.number_rooms} Bedroom(s)</div>`);
+        info.append(`<div class="number_bathrooms">${place.number_bathrooms} Bathroom(s)`);
+        article.append(info);
+
+        // Description
+        const desc = $(`<div class="description">${place.description}</div>`);
+        article.append(desc);
+
+        // finally
+        $('section.places').append(article);
+      }
+    };
+
   // Show API status
   $.ajax({
     url: 'http://localhost:5001/api/v1/status/',
@@ -37,31 +64,8 @@ $(function () {
     data: '{}',
     contentType: 'application/json'
   })
-    .done(function displayPlaces(places) {
-      console.log('Got places');
-      for (const place of places) {
-        const article = $('<article></article>');
-
-        // Title
-        const title = $('<div class="title_box"></div>');
-        title.append(`<h2>${place.name}</h2>`);
-        title.append(`<div class="price_by_night">${place.price_by_night}</div>`);
-        article.append(title);
-
-        // information
-        const info = $('<div class="information"></div>');
-        info.append(`<div class="max_guest">${place.max_guest} Guest(s)</div>`);
-        info.append(`<div class="number_rooms">${place.number_rooms} Bedroom(s)</div>`);
-        info.append(`<div class="number_bathrooms">${place.number_bathrooms} Bathroom(s)`);
-        article.append(info);
-
-        // Description
-        const desc = $(`<div class="description">${place.description}</div>`);
-        article.append(desc);
-
-        // finally
-        $('section.places').append(article);
-      }
+    .done(function (places) {
+	    displayPlaces(places);
     })
 
     .fail(function (xhr, status, errorThrown) {
@@ -94,6 +98,7 @@ $(function () {
   });
 
 	// Filters Search
+	// Display only places with specific Amenities
 	$('section.filters button').click(function() {
 		alert(`Hey! Why did you click that 'Search' button :___:`);	// test
 		let payload = Object();
@@ -110,6 +115,7 @@ $(function () {
 		})
 		.done(function(places) {
 			alert(`Got ${places.length} places(s)`);	// test
+			$('section.places').empty();
 			displayPlaces(places);
 		})
 		.fail(function (xhr, status, errorThrown) {
