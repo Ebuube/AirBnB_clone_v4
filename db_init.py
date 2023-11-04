@@ -50,6 +50,10 @@ place_1.max_guest = 6
 place_1.price_by_night = 120
 place_1.latitude = 37.773972
 place_1.longitude = 122.431297
+place_1.description = """This is a lovely 1 bedroom and 1 bathroom apartment \
+that can accomodate 2 people. It locates at the center of Shanghai and next \
+to subway line 1. 1 stop to People Square, 2 stops to Bund, 3 stops to \
+Jingan Temple."""
 place_1.save()
 
 place_2 = Place()
@@ -62,6 +66,10 @@ place_2.max_guest = 20
 place_2.price_by_night = 4000
 place_2.latitude = 45.065
 place_2.longitude = 50.523
+place_2.description = """Well ventilated environment located close to the \
+beach. Equipped with ultramodern technology and robots to assist with \
+daily tasks.
+"""
 place_2.save()
 
 review_1 = Review()
