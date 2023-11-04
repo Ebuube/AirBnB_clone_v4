@@ -105,3 +105,8 @@ button:hover {
 .amenities .popover ul input {
     margin-right: 10px;
 }
+
+div.placesh1 .no_place_found {
+    font-size: 35px;
+    margin-left: 10px;
+}
