@@ -5,7 +5,7 @@ $(function () {
   $.ajax({
     url: 'http://localhost:5001/api/v1/status/',
     type: 'GET',
-    dataType: 'json',
+    dataType: 'json'
   })
 
     .done(function (json) {
@@ -26,29 +26,28 @@ $(function () {
       console.log(`xhr: ${xhr}\nstatus: ${status}\nerrorThrown: ${errorThrown}`);
     });
 
-	function getUser (userIdentification) {
-		let userData = Object();
-		console.log(`User id: ${userIdentification}`);
-		$.ajax({
-			url: `http://localhost:5001/api/v1/users/${userIdentification}`,
-			type: 'GET',
-			dataType: 'json',
-		})
-		.done(function (user) {
-			console.log(`Got user! ${user.first_name}`);	// test
-			if (user.id === userIdentification) {
-				userData = JSON.parse(JSON.stringify(user));
-			}
-		})
-		.fail(function (xhr, status, errorThrown) {
-			console.log('Failed to get users');
+  function getUser (userIdentification) {
+    let userData = Object();
+    console.log(`User id: ${userIdentification}`);
+    $.ajax({
+      url: `http://localhost:5001/api/v1/users/${userIdentification}`,
+      type: 'GET',
+      dataType: 'json'
+    })
+      .done(function (user) {
+        console.log(`Got user! ${user.first_name}`);	// test
+        if (user.id === userIdentification) {
+          userData = JSON.parse(JSON.stringify(user));
+        }
+      })
+      .fail(function (xhr, status, errorThrown) {
+        console.log('Failed to get users');
       			console.log(`xhr: ${xhr}\nstatus: ${status}\nerrorThrown: ${errorThrown}`);
-		});
+      });
 
-		console.log(`Returning the User ${userData.first_name}`);	// test
-		return userData;
-	};
-
+    console.log(`Returning the User ${userData.first_name}`);	// test
+    return userData;
+  }
 
   // Display places
   $.ajax({
@@ -58,47 +57,46 @@ $(function () {
 	  data: '{}',
 	  contentType: 'application/json'
   })
-	.done(function (places) {
-		console.log('Got places');
-		for (place of places) {
-			let article = $('<article></article>');
+    .done(function (places) {
+      console.log('Got places');
+      for (place of places) {
+        const article = $('<article></article>');
 
-			// Title
-			let title = $('<div class="title_box"></div>');
-			title.append(`<h2>${place.name}</h2>`);
-			title.append(`<div class="price_by_night">${place.price_by_night}</div>`);
-			article.append(title);
+        // Title
+        const title = $('<div class="title_box"></div>');
+        title.append(`<h2>${place.name}</h2>`);
+        title.append(`<div class="price_by_night">${place.price_by_night}</div>`);
+        article.append(title);
 
-			// information
-			let info = $('<div class="information"></div>');
-			info.append(`<div class="max_guest">${place.max_guest} Guest(s)</div>`);
-			info.append(`<div class="number_rooms">${place.number_rooms} Bedroom(s)</div>`);
-			info.append(`<div class="number_bathrooms">${place.number_bathrooms} Bathroom(s)`);
-			article.append(info);
+        // information
+        const info = $('<div class="information"></div>');
+        info.append(`<div class="max_guest">${place.max_guest} Guest(s)</div>`);
+        info.append(`<div class="number_rooms">${place.number_rooms} Bedroom(s)</div>`);
+        info.append(`<div class="number_bathrooms">${place.number_bathrooms} Bathroom(s)`);
+        article.append(info);
 
+        /*
 			// User
 			let userBlock = $('<div class="user"></div>');
 			let user = getUser(`${place.user_id}`);
-			/*
 			console.log(`User: ${user}`);
 			userBlock.append(`<b>Owner:</b> ${user.first_name} ${user.last_name}</div>`);
-			*/
 			article.append(userBlock);
-			
-			// Description
-			let desc = $(`<div class="description">${place.description}</div>`);
-			article.append(desc);
+			*/
 
-			// finally
-			$('section.places').append(article);
-		};
-	})
+        // Description
+        const desc = $(`<div class="description">${place.description}</div>`);
+        article.append(desc);
 
-	.fail(function (xhr, status, errorThrown) {
-		console.log('Could not display places');
-		console.log(`xhr: ${xhr}\nstatus: ${status}\nerrorThrown: ${errorThrown}`);
-	});
+        // finally
+        $('section.places').append(article);
+      }
+    })
 
+    .fail(function (xhr, status, errorThrown) {
+      console.log('Could not display places');
+      console.log(`xhr: ${xhr}\nstatus: ${status}\nerrorThrown: ${errorThrown}`);
+    });
 
   // Select amenities
   const userAmenities = {};
