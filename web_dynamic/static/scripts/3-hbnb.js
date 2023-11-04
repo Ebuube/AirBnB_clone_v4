@@ -26,40 +26,17 @@ $(function () {
       console.log(`xhr: ${xhr}\nstatus: ${status}\nerrorThrown: ${errorThrown}`);
     });
 
-  function getUser (userIdentification) {
-    let userData = Object();
-    console.log(`User id: ${userIdentification}`);
-    $.ajax({
-      url: `http://localhost:5001/api/v1/users/${userIdentification}`,
-      type: 'GET',
-      dataType: 'json'
-    })
-      .done(function (user) {
-        console.log(`Got user! ${user.first_name}`);	// test
-        if (user.id === userIdentification) {
-          userData = JSON.parse(JSON.stringify(user));
-        }
-      })
-      .fail(function (xhr, status, errorThrown) {
-        console.log('Failed to get users');
-      			console.log(`xhr: ${xhr}\nstatus: ${status}\nerrorThrown: ${errorThrown}`);
-      });
-
-    console.log(`Returning the User ${userData.first_name}`);	// test
-    return userData;
-  }
-
   // Display places
   $.ajax({
-	  url: 'http://localhost:5001/api/v1/places_search/',
-	  type: 'POST',
-	  dataType: 'json',
-	  data: '{}',
-	  contentType: 'application/json'
+    url: 'http://localhost:5001/api/v1/places_search/',
+    type: 'POST',
+    dataType: 'json',
+    data: '{}',
+    contentType: 'application/json'
   })
     .done(function (places) {
       console.log('Got places');
-      for (place of places) {
+      for (const place of places) {
         const article = $('<article></article>');
 
         // Title
@@ -74,15 +51,6 @@ $(function () {
         info.append(`<div class="number_rooms">${place.number_rooms} Bedroom(s)</div>`);
         info.append(`<div class="number_bathrooms">${place.number_bathrooms} Bathroom(s)`);
         article.append(info);
-
-        /*
-			// User
-			let userBlock = $('<div class="user"></div>');
-			let user = getUser(`${place.user_id}`);
-			console.log(`User: ${user}`);
-			userBlock.append(`<b>Owner:</b> ${user.first_name} ${user.last_name}</div>`);
-			article.append(userBlock);
-			*/
 
         // Description
         const desc = $(`<div class="description">${place.description}</div>`);
