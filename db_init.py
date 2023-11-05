@@ -108,6 +108,61 @@ place_2.amenities.append(amenity_2)
 place_2.amenities.append(amenity_4)
 place_2.save()
 
+# Second state
+
+state_2 = State(name='Nigeria')
+state_2.save()
+
+city_3 = City(name="Enugu", state_id=state_2.id)
+city_3.save()
+
+city_4 = City(name="Lagos", state_id=state_2.id)
+city_4.save()
+
+place_3 = Place()
+place_3.city_id = city_3.id
+place_3.user_id = user_1.id
+place_3.name = 'Dnashe lounge'
+place_3.number_rooms = 10
+place_3.number_bathrooms = 10
+place_3.max_guest = 10
+place_3.price_by_night = 500
+place_3.latitude = 12.314
+place_3.longitiude = 10.410
+place_3.description = """An exquisite umpire for the elites."""
+place_3.amenities.append(amenity_1)
+place_3.amenities.append(amenity_2)
+place_3.amenities.append(amenity_3)
+place_3.amenities.append(amenity_4)
+place_3.save()
+
+place_4 = Place()
+place_4.city_id = city_4.id
+place_4.user_id = user_2.id
+place_4.name = 'Haux brothel'
+place_4.number_rooms = 15
+place_4.number_bathrooms = 8
+place_4.max_guest = 15
+place_4.price_by_night = 45
+place_4.latitude = 42.213
+place_4.longitude = 24.245
+place_4.description = "A place to have fun!!! On y va!!!"
+place_4.amenities.append(amenity_3)
+place_4.amenities.append(amenity_4)
+place_4.save()
+
+review_3 = Review()
+review_3.place_id = place_3.id
+review_3.user_id = user_1.id
+review_3.text = "So classic!"
+review_3.save()
+
+review_4 = Review()
+review_4.place_id = place_4.id
+review_4.user_id = user_2.id
+review_4.text = "Fun all along! The beers are hot!!"
+review_4.save()
+
 storage.save()
 
 # for obj in storage.all().values():
