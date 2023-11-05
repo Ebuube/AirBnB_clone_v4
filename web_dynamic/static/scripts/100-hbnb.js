@@ -99,71 +99,70 @@ $(function () {
     if ($('.amenities h4').text().trim().length === 0) { $('.amenities h4').html(defaultH4); }
   });
 
-	// Select States
-	$('div.locations div.popover h2 input').on('change', function () {
-		console.log(`Hey! Why click on me ${$(this).data('name')}?`); // test
-		if ($(this).is(':checked')) {
-			choiceStates[$(this).data('id')] = $(this).data('name');
-		} else {
-			delete choiceStates[$(this).data('id')];
-		}
+  // Select States
+  $('div.locations div.popover h2 input').on('change', function () {
+    console.log(`Hey! Why click on me ${$(this).data('name')}?`); // test
+    if ($(this).is(':checked')) {
+      choiceStates[$(this).data('id')] = $(this).data('name');
+    } else {
+      delete choiceStates[$(this).data('id')];
+    }
 
-		updateH4('states', choiceStates);
-	});
+    updateH4('states', choiceStates);
+  });
 
-	// Select cities
-	$('div.locations div.popover ul li ul li input').on('change', function () {
-		console.log(`Hey! Why click on me ${$(this).data('name')}?`); // test
-		if ($(this).is(':checked')) {
-			choiceCities[$(this).data('id')] = $(this).data('name');
-		} else {
-			delete choiceCities[$(this).data('id')];
-		}
+  // Select cities
+  $('div.locations div.popover ul li ul li input').on('change', function () {
+    console.log(`Hey! Why click on me ${$(this).data('name')}?`); // test
+    if ($(this).is(':checked')) {
+      choiceCities[$(this).data('id')] = $(this).data('name');
+    } else {
+      delete choiceCities[$(this).data('id')];
+    }
 
-		updateH4('cities', choiceCities);
-	});
+    updateH4('cities', choiceCities);
+  });
 
-	// updateH4 tag
-	function updateH4(typeData, data) {
-		console.log(`typeData: ${typeData}`); // test
-		const defaultTypes = ['states', 'cities'];
-		if (!(defaultTypes.includes(typeData))) {
-			console.log(`Wrong type: ${typeData}`);
-			return;
-		};
+  // updateH4 tag
+  function updateH4 (typeData, data) {
+    console.log(`typeData: ${typeData}`); // test
+    const defaultTypes = ['states', 'cities'];
+    if (!(defaultTypes.includes(typeData))) {
+      console.log(`Wrong type: ${typeData}`);
+      return;
+    }
 
-		let stateH4 = $('div.locations h4');
-		let spaceHolder = $('<div class="space"></br></div>');
-		let spaceSelect = $('div.locations h4 div.space');
-		let typeList = $(`<div class="${typeData}"></div>`);
-		let typeListSelect = $(`div.locations h4 div.${typeData}`);
-		let defaultDiv = '&nbsp;';
-		typeListSelect.remove();
-		spaceSelect.remove();
-		typeList = $(`<div class="${typeData}"></div>`);
-		if (typeData === "states") {
-			stateH4.prepend(typeList);
-			typeList.insertAfter(spaceHolder);
-		}
-		else if (typeData === "cities") {
-			stateH4.append(typeList);
-			typeList.insertBefore(spaceHolder);
-		}
-		console.log(`stateH4: ${JSON.stringify(stateH4)}`); // test
-		for (const [, name] of Object.entries(data)) {
-			let prevList = typeList.text().trim();
-			console.log(`${typeData}List: ${JSON.stringify(typeList)}`); // test
-			console.log(`prevList: ${prevList}`); // test
-			if (prevList.length === 0) {
-				typeList.text(name);
-			} else {
-				typeList.text(typeList.text() +', ' + name);
-			}
-		};
-		if (typeList.text().trim().length === 0) {
-			typeList.html(defaultDiv);
-		}
-	};
+    const stateH4 = $('div.locations h4');
+    const spaceHolder = $('<div class="space"></br></div>');
+    const spaceSelect = $('div.locations h4 div.space');
+    let typeList = $(`<div class="${typeData}"></div>`);
+    const typeListSelect = $(`div.locations h4 div.${typeData}`);
+    const defaultDiv = '&nbsp;';
+    typeListSelect.remove();
+    spaceSelect.remove();
+    typeList = $(`<div class="${typeData}"></div>`);
+    if (typeData === 'states') {
+      stateH4.prepend(typeList);
+      typeList.append(spaceHolder);
+    } else if (typeData === 'cities') {
+      typeList.append(spaceHolder);
+      stateH4.append(typeList);
+    }
+    console.log(`stateH4: ${JSON.stringify(stateH4)}`); // test
+    for (const [, name] of Object.entries(data)) {
+      const prevList = typeList.text().trim();
+      console.log(`${typeData}List: ${JSON.stringify(typeList)}`); // test
+      console.log(`prevList: ${prevList}`); // test
+      if (prevList.length === 0) {
+        typeList.text(name);
+      } else {
+        typeList.text(typeList.text() + ', ' + name);
+      }
+    }
+    if (typeList.text().trim().length === 0) {
+      typeList.html(defaultDiv);
+    }
+  }
 
   // Filters Search
   // Display only places with specific Amenities
@@ -182,8 +181,10 @@ $(function () {
       const payload = Object();
       payload.amenities = Object.keys(choiceAmenities);
       payload.states = Object.keys(choiceStates);
+      payload.cities = Object.keys(choiceCities);
       console.log(`Amenities: ${JSON.stringify(choiceAmenities)}`);
       console.log(`States: ${JSON.stringify(choiceStates)}`);
+      console.log(`Cities: ${JSON.stringify(choiceCities)}`);
       console.log(`payload: ${JSON.stringify(payload)}`);
       // get specified places
       $.ajax({
