@@ -2,7 +2,9 @@
 // Select some Amenities to be comfortable!
 $(function () {
   // versatile values
-  const userAmenities = {};
+  const choiceAmenities = {};
+  const choiceStates = {};
+  const choiceCities = {};
 
   function displayPlaces (places) {
     console.log('Got places');
@@ -77,15 +79,15 @@ $(function () {
   $('.amenities .popover input').on('change', function () {
     // update h4
     if ($(this).is(':checked')) {
-      userAmenities[$(this).data('id')] = $(this).data('name');
+      choiceAmenities[$(this).data('id')] = $(this).data('name');
     } else {
-      delete userAmenities[$(this).data('id')];
+      delete choiceAmenities[$(this).data('id')];
     }
 
     const defaultH4 = '&nbsp;';
     $('.amenities h4').empty();
 
-    for (const [, name] of Object.entries(userAmenities)) {
+    for (const [, name] of Object.entries(choiceAmenities)) {
       const prevList = $('.amenities h4').text().trim();
       if (prevList.length === 0) {
         $('.amenities h4').text(name);
@@ -96,6 +98,72 @@ $(function () {
 
     if ($('.amenities h4').text().trim().length === 0) { $('.amenities h4').html(defaultH4); }
   });
+
+	// Select States
+	$('div.locations div.popover h2 input').on('change', function () {
+		console.log(`Hey! Why click on me ${$(this).data('name')}?`); // test
+		if ($(this).is(':checked')) {
+			choiceStates[$(this).data('id')] = $(this).data('name');
+		} else {
+			delete choiceStates[$(this).data('id')];
+		}
+
+		updateH4('states', choiceStates);
+	});
+
+	// Select cities
+	$('div.locations div.popover ul li ul li input').on('change', function () {
+		console.log(`Hey! Why click on me ${$(this).data('name')}?`); // test
+		if ($(this).is(':checked')) {
+			choiceCities[$(this).data('id')] = $(this).data('name');
+		} else {
+			delete choiceCities[$(this).data('id')];
+		}
+
+		updateH4('cities', choiceCities);
+	});
+
+	// updateH4 tag
+	function updateH4(typeData, data) {
+		console.log(`typeData: ${typeData}`); // test
+		const defaultTypes = ['states', 'cities'];
+		if (!(defaultTypes.includes(typeData))) {
+			console.log(`Wrong type: ${typeData}`);
+			return;
+		};
+
+		let stateH4 = $('div.locations h4');
+		let spaceHolder = $('<div class="space"></br></div>');
+		let spaceSelect = $('div.locations h4 div.space');
+		let typeList = $(`<div class="${typeData}"></div>`);
+		let typeListSelect = $(`div.locations h4 div.${typeData}`);
+		let defaultDiv = '&nbsp;';
+		typeListSelect.remove();
+		spaceSelect.remove();
+		typeList = $(`<div class="${typeData}"></div>`);
+		if (typeData === "states") {
+			stateH4.prepend(typeList);
+			typeList.insertAfter(spaceHolder);
+		}
+		else if (typeData === "cities") {
+			stateH4.append(typeList);
+			typeList.insertBefore(spaceHolder);
+		}
+		console.log(`stateH4: ${JSON.stringify(stateH4)}`); // test
+		for (const [, name] of Object.entries(data)) {
+			let prevList = typeList.text().trim();
+			console.log(`${typeData}List: ${JSON.stringify(typeList)}`); // test
+			console.log(`prevList: ${prevList}`); // test
+			if (prevList.length === 0) {
+				typeList.text(name);
+			} else {
+				typeList.text(typeList.text() +', ' + name);
+			}
+		};
+		if (typeList.text().trim().length === 0) {
+			typeList.html(defaultDiv);
+		}
+	};
 
   // Filters Search
   // Display only places with specific Amenities
@@ -112,8 +180,10 @@ $(function () {
       $('section.places').empty();
 
       const payload = Object();
-      payload.amenities = Object.keys(userAmenities);
-      console.log(`Amenities: ${JSON.stringify(userAmenities)}`);
+      payload.amenities = Object.keys(choiceAmenities);
+      payload.states = Object.keys(choiceStates);
+      console.log(`Amenities: ${JSON.stringify(choiceAmenities)}`);
+      console.log(`States: ${JSON.stringify(choiceStates)}`);
       console.log(`payload: ${JSON.stringify(payload)}`);
       // get specified places
       $.ajax({
