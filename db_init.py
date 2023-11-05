@@ -100,6 +100,43 @@ amenity_4 = Amenity()
 amenity_4.name = "Air conditioning"
 amenity_4.save()
 
+amenity_5 = Amenity()
+amenity_5.name = "Pool"
+amenity_5.save()
+
+amenity_6 = Amenity()
+amenity_6.name = "Bar"
+amenity_6.save()
+
+amenity_7 = Amenity()
+amenity_7.name = "Garage"
+amenity_7.save()
+
+amenity_8 = Amenity()
+amenity_8.name = "Cinema"
+amenity_8.save()
+
+amenity_9 = Amenity()
+amenity_9.name = "Garden"
+amenity_9.save()
+
+amenity_10 = Amenity()
+amenity_10.name = "Library"
+amenity_10.save()
+
+amenity_11 = Amenity()
+amenity_11.name = "Park"
+amenity_11.save()
+
+amenity_13 = Amenity()
+amenity_13.name = "Cafe"
+amenity_13.save()
+
+
+amenity_15 = Amenity()
+amenity_15.name = "Telescope"
+amenity_15.save()
+
 place_1.amenities.append(amenity_1)
 place_1.amenities.append(amenity_3)
 place_1.save()
@@ -162,6 +199,36 @@ review_4.place_id = place_4.id
 review_4.user_id = user_2.id
 review_4.text = "Fun all along! The beers are hot!!"
 review_4.save()
+
+# Third state
+state_3 = State(name="France")
+state_3.save()
+
+city_5 = City(name="Lyon", state_id=state_3.id)
+city_5.save()
+
+city_6 = City(name="Gabon", state_id=state_3.id)
+city_6.save()
+
+city_7 = City(name="Paris", state_id=state_3.id)
+city_7.save()
+
+place_5 = Place()
+place_5.city_id = city_3.id
+place_5.user_id = user_1.id
+place_5.name = 'Arc de Triomphe'
+place_5.number_rooms = 21
+place_5.number_bathrooms = 10
+place_5.max_guest = 20
+place_5.price_by_night = 1500
+place_5.latitude = 52.42
+place_5.longitiude = 76.532
+place_5.description = """An amazing site for tourism, with unique designs"""
+place_5.amenities.append(amenity_5)
+place_5.amenities.append(amenity_1)
+place_5.amenities.append(amenity_3)
+place_5.amenities.append(amenity_4)
+place_5.save()
 
 storage.save()
 
