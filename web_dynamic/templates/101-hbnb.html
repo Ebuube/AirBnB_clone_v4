@@ -79,6 +79,14 @@
           <div class="description">
 	    {{ place.description | safe }}
           </div>
+
+	  <div class="reviews">
+	    <h2>Reviews</h2>
+	    {% for review in reviews %}
+	      <h3>From {{ review.user.first_name}} {{ review.user.last_name }} the review.created_at }}</h3>
+	      <p>{{ review.text }}</p>
+	    {% endfor %}
+	  </div>
 	</article>
 	{% endfor %}
 	-->

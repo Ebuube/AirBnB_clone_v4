@@ -40,6 +40,27 @@ user_2.first_name = "Bob"
 user_2.last_name = "Dylan"
 user_2.save()
 
+user_3 = User()
+user_3.email = 'memy@gmail.com'
+user_3.password = 'memypwd'
+user_3.first_name = 'Memy'
+user_3.last_name = 'Porker'
+user_3.save()
+
+user_4 = User()
+user_4.email = 'krin@hbtn.io'
+user_4.password = 'krin@pwd'
+user_4.first_name = 'Krinko'
+user_4.last_name = 'Puthapa'
+user_4.save()
+
+user_5 = User()
+user_5.email = 'nikky@hbtnio.io'
+user_5.password = 'quikser@ka.com'
+user_5.first_name = 'Quiker'
+user_5.last_name = 'Shika'
+user_5.save()
+
 place_1 = Place()
 place_1.city_id = city_1.id
 place_1.user_id = user_1.id
@@ -199,6 +220,18 @@ review_4.place_id = place_4.id
 review_4.user_id = user_2.id
 review_4.text = "Fun all along! The beers are hot!!"
 review_4.save()
+
+review_5 = Review()
+review_5.place_id = place_3.id
+review_5.user_id = user_4.id
+review_5.text = 'Uniquely designed'
+review_5.save()
+
+review_6 = Review()
+review_6.place_id = place_4.id
+review_6.user_id = user_5.id
+review_6.text = 'A place for the elites'
+review_6.save()
 
 # Third state
 state_3 = State(name="France")

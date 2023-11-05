@@ -28,6 +28,32 @@ $(function () {
       const desc = $(`<div class="description">${place.description}</div>`);
       article.append(desc);
 
+      // Reviews
+	    $.ajax({
+		    type: 'GET',
+		    url: `http://localhost:5001/api/v1/places/${place.id}/reviews`,
+		    dataType: 'JSON'
+	    })
+	    .done(function (reviews) {
+		    reviews.forEach( review => {
+			    $.ajax({
+				    type: 'GET',
+				    url: `http://localhost:5001/api/v1/users/${review.user_id}`,
+				    dataType: 'JSON'
+			    })
+			    .done (function (user) {
+	    				let rev = $(`<div class="reviews"></div>`);
+	    				rev.prepend('<h2>Reviews</h2>');
+	    				article.append(rev);
+				    const months = {1: 'January', 2: 'February', 3: 'March', 4: 'April', 5: 'May', 6: 'June', 7: 'July', 8: 'August', 9: 'September', 10: 'October', 11: 'November', 12: 'December'};
+				    date = Date(review.created_at);
+				    rev.append(
+				    `<h3>from ${user.first_name} ${user.last_name} ${date.toString('dd MM, yyy')}</h3>
+				    <p>${review.text}</p>`);
+			    });
+		    });
+	    })
+
       // finally
       $('section.places').append(article);
     }
